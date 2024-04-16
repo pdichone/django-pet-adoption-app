@@ -1,0 +1,43 @@
+{% extends "adoption/base.html" %}
+{% load django_bootstrap5 %}
+{% block content %}
+    <div class="p-3 mb-4 bg-light border round-3">
+        <div class="col-md-12">
+            <h3 class="display-4">PetAdoption</h3>
+            <p class="lead">
+                Welcome to <i>PetAdoption </i>,
+                your gateway to meeting the most lovable companions.
+                Our mission is to connect these wonderful animals with caring individuals
+                like you who are ready to open their hearts and homes. Browse our gallery of adorable faces, learn their stories, and discover how you can make a difference in a pet's life today. Whether you're looking for a playful puppy,
+                a curious kitten, or a serene senior, we have a friend waiting just for you!
+            </p>
+        </div>
+    </div>
+    <h3>Meet our friends:</h3>
+    <div class="container">
+        <div class="row">
+            {% for pet in pets %}
+                <div class="col-sm-6 col-md-4 col-lg-3 mb-4">
+                    <div class="card h-100 text-bg-light mb-3">
+                        <!-- Pet Photo -->
+                        {% if pet.photo %}
+                            <img src="{{ pet.photo.url }}"
+                                 class="card-img-top"
+                                 alt="Photo of {{ pet.name }}">
+                        {% endif %}
+                        <!-- Card Body -->
+                        <div class="card-body">
+                            <!-- Pet Name as Title -->
+                            <h5 class="card-title">{{ pet.name }}</h5>
+                            <!-- Pet Description -->
+                            <p class="card-text">{{ pet.description|truncatechars:50 }}</p>
+                            <!-- Details Link -->
+                            <a href="{% url 'adoption:pet_details' pet.id %}"
+                               class="btn btn-primary">Details</a>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+{% endblock content %}
